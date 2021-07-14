@@ -1,4 +1,5 @@
 ﻿// Based on https://github.com/MicrosoftArchive/bcl/blob/master/Libraries/BigRational/BigRationalLibrary/BigRational.cs
+// Code is modified based on analyzer changes
 namespace System.Numerics
 {
 	//   Copyright (c) Microsoft Corporation.  All rights reserved.
@@ -122,7 +123,7 @@ namespace System.Numerics
 
 		public BigRational GetFractionPart() => new BigRational(BigInteger.Remainder(this.m_numerator, this.m_denominator), this.m_denominator);
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj == null)
 				return false;
@@ -135,7 +136,7 @@ namespace System.Numerics
 		public override int GetHashCode() => (this.m_numerator / this.Denominator).GetHashCode();
 
 		// IComparable
-		int IComparable.CompareTo(object obj)
+		int IComparable.CompareTo(object? obj)
 		{
 			if (obj == null)
 				return 1;
@@ -434,16 +435,12 @@ namespace System.Numerics
 
 		// ----- SECTION: explicit conversions from BigRational to numeric base types  ----------------*
 		#region explicit conversions from BigRational
-		[CLSCompliant(false)]
 		public static explicit operator sbyte(BigRational value) => (sbyte)BigInteger.Divide(value.m_numerator, value.m_denominator);
 
-		[CLSCompliant(false)]
 		public static explicit operator ushort(BigRational value) => (ushort)BigInteger.Divide(value.m_numerator, value.m_denominator);
 
-		[CLSCompliant(false)]
 		public static explicit operator uint(BigRational value) => (uint)BigInteger.Divide(value.m_numerator, value.m_denominator);
 
-		[CLSCompliant(false)]
 		public static explicit operator ulong(BigRational value) => (ulong)BigInteger.Divide(value.m_numerator, value.m_denominator);
 
 		public static explicit operator byte(BigRational value) => (byte)BigInteger.Divide(value.m_numerator, value.m_denominator);
@@ -544,16 +541,12 @@ namespace System.Numerics
 		// ----- SECTION: implicit conversions from numeric base types to BigRational  ----------------*
 		#region implicit conversions to BigRational
 
-		[CLSCompliant(false)]
 		public static implicit operator BigRational(sbyte value) => new BigRational((BigInteger)value);
 
-		[CLSCompliant(false)]
 		public static implicit operator BigRational(ushort value) => new BigRational((BigInteger)value);
 
-		[CLSCompliant(false)]
 		public static implicit operator BigRational(uint value) => new BigRational((BigInteger)value);
 
-		[CLSCompliant(false)]
 		public static implicit operator BigRational(ulong value) => new BigRational((BigInteger)value);
 
 		public static implicit operator BigRational(byte value) => new BigRational((BigInteger)value);
@@ -576,7 +569,7 @@ namespace System.Numerics
 
 		// ----- SECTION: private serialization instance methods  ----------------*
 		#region serialization
-		void IDeserializationCallback.OnDeserialization(object sender)
+		void IDeserializationCallback.OnDeserialization(object? sender)
 		{
 			try
 			{
@@ -601,7 +594,6 @@ namespace System.Numerics
 			}
 		}
 
-		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
 		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			if (info == null)
@@ -620,8 +612,10 @@ namespace System.Numerics
 				throw new ArgumentNullException("info");
 			}
 
+#pragma warning disable CS8605 // Unboxing a possibly null value.
 			this.m_numerator = (BigInteger)info.GetValue("Numerator", typeof(BigInteger));
 			this.m_denominator = (BigInteger)info.GetValue("Denominator", typeof(BigInteger));
+#pragma warning restore CS8605 // Unboxing a possibly null value.
 		}
 		#endregion serialization
 
