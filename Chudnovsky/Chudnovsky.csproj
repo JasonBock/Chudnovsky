@@ -9,4 +9,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Version>1.0.0</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MathNet.Numerics.FSharp" Version="4.15.0" />
+  </ItemGroup>
 </Project>

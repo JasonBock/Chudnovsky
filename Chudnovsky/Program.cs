@@ -1,3 +1,4 @@
 ﻿using Chudnovsky;
 
-CalculatePiBCLWay.Calculate();
+// CalculatePiBCLWay.Calculate();
+CalculatePi.Calculate();
