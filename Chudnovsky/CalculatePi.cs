@@ -59,11 +59,13 @@ namespace Chudnovsky
 
 		private static BigRational GetSquareRoot(BigRational b)
 		{
+			var two = BigRational.FromInt(2);
+
 			var s = b;
 
 			for (var i = 0; i < 18; i++)
 			{
-				b = (b + (s / b)) / BigRational.FromInt(2);
+				b = (b + (s / b)) / two;
 			}
 
 			return b;

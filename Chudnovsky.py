@@ -58,5 +58,5 @@ def pi(precision: int) -> str:
 
 
 if __name__ == "__main__":
-    n = 5443
+    n = 10000
     print(f"The first {n} digits of pi is: {pi(n)}")
